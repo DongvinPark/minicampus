@@ -58,4 +58,17 @@ public interface MemberService extends UserDetailsService {
      * 회원을 탈퇴시켜 주는 로직
      */
     ServiceResult withdraw(String userId, String password);
+
+
+    /**
+     *  클라이언트의 로그인 정보를 저장하기 위해서 MemberServiceImpl.java 내에 존재하는
+     *  userAgentInfo, userIpAddr 필드를 수정하기 위한 메서드들 선언.
+     * */
+    public String getUserAgentInfo();
+
+    public void setUserAgentInfo(String userAgentInfo);
+
+    public String getUserIpAddr();
+
+    public void setUserIpAddr(String userIpAddr);
 }

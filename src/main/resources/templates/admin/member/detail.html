@@ -101,6 +101,35 @@
 
         </div>
 
+        <br/>
+
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>NO</th>
+                    <th>
+                        로그인 일자
+                    </th>
+                    <th>
+                        접속 IP
+                    </th>
+                    <th>
+                        접속 UserAgent
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="x : ${loginHistory}">
+                    <td th:text="${x.number}"></td>
+                    <td th:text="${x.loginDate}">
+                    </td>
+                    <td th:text="${x.accessIp}"></td>
+                    <td th:text="${x.userAgentInfo}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
     </div>
 

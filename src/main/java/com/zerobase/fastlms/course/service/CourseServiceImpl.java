@@ -97,8 +97,13 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseDto> list(CourseParam parameter) {
         
         long totalCount = courseMapper.selectListCount(parameter);
-        
+
+        System.out.println("코스 서비스 내 토탈카운트" + totalCount);
+
         List<CourseDto> list = courseMapper.selectList(parameter);
+
+        System.out.println("코스 서비스 내 페이징용 별도 리스트 길이" + list.size());
+
         if (!CollectionUtils.isEmpty(list)) {
             int i = 0;
             for (CourseDto x : list) {

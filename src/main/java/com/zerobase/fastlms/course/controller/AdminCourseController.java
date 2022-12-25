@@ -45,7 +45,14 @@ public class AdminCourseController extends BaseController {
         }
         String queryString = parameter.getQueryString();
         String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
-        
+
+        System.out.println("코스 파트 콜!!");
+        System.out.println("코스 쿼리스트링" + queryString);
+        System.out.println("페이저HTML : " + pagerHtml);
+        System.out.println("토탈 카운트" + totalCount);
+        System.out.println("페이지 사이즈" + parameter.getPageSize());
+        System.out.println("페이지 인덱스" + parameter.getPageIndex());
+
         model.addAttribute("list", courseList);
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("pager", pagerHtml);
@@ -146,7 +153,8 @@ public class AdminCourseController extends BaseController {
                 log.info("############################ - 1");
                 log.info(e.getMessage());
             }
-        }
+        }// file name if part
+
         
         parameter.setFilename(saveFilename);
         parameter.setUrlFilename(urlFilename);

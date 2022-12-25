@@ -39,6 +39,10 @@ public class MemberDto {
     //추가컬럼
     long totalCount;
     long seq;
+
+
+    //가장 최근(==마지막) 로그인 일자 추가.
+    private String latestLoginDate;
     
     
     public static MemberDto of(Member member) {

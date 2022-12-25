@@ -77,28 +77,34 @@
                     <th>
                         관리자여부
                     </th>
+                    <th>
+                        마지막 로그인 일자
+                    </th>
                 </tr>
             </thead>
             <tbody>
             <tr th:each="x : ${list}">
-                    <td th:text="${x.seq}">1</td>
+                    <td th:text="${x.seq}"></td>
                     <td>
                         <a th:text="${x.userId}"
                            th:href="${'detail.do?userId=' + x.userId}">
                             satcop@naver.com</a>
                     </td>
-                    <td th:text="${x.userName}">홍길동</td>
-                    <td th:text="${x.phone}">010-1111-2222</td>
+                    <td th:text="${x.userName}"></td>
+                    <td th:text="${x.phone}"></td>
                     <td>
                         <p th:if="${x.emailAuthYn}">Y</p>
                         <p th:if="${x.emailAuthYn eq false}">N</p>
                     </td>
                     <td>
-                        <p th:text="${x.regDt}">2021.01.01</p>
+                        <p th:text="${x.regDt}"></p>
                     </td>
                     <td>
                         <p th:if="${x.adminYn}">Y</p>
                         <p th:if="${x.adminYn eq false}">N</p>
+                    </td>
+                    <td>
+                        <p th:text="${x.latestLoginDate}"> 로그인 기록 없음 </p>
                     </td>
                 </tr>
             </tbody>
