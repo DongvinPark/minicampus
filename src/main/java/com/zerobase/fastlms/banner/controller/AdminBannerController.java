@@ -2,8 +2,11 @@ package com.zerobase.fastlms.banner.controller;
 
 
 import com.zerobase.fastlms.banner.dto.BannerDto;
+import com.zerobase.fastlms.banner.entity.BannerInfo;
+import com.zerobase.fastlms.banner.mapper.BannerMapper;
 import com.zerobase.fastlms.banner.model.BannerInput;
 import com.zerobase.fastlms.banner.model.BannerParam;
+import com.zerobase.fastlms.banner.repository.BannerRepository;
 import com.zerobase.fastlms.banner.service.AdminBannerService;
 import com.zerobase.fastlms.course.dto.CourseDto;
 import com.zerobase.fastlms.course.model.CourseInput;
@@ -33,28 +36,28 @@ import java.util.UUID;
 @Slf4j
 public class AdminBannerController extends BaseController {
     private final AdminBannerService adminBannerService;
-
+    private final BannerRepository bannerRepository;
 
     @GetMapping("/admin/banner/list.do")
     public String list(Model model, BannerParam parameter) {
         //log.info("어드민 배너 컨트롤러 내 list()메서드 호출!!");
 
+        List<BannerInfo> bannerInfoList = bannerRepository.findAll();
+        long totalCount = bannerInfoList.size();
+        System.out.println("배너 서비스 내 토탈 카운트 : " + totalCount);
+
         parameter.init();
-        List<BannerDto> bannerDtoList = adminBannerService.list(parameter);
-
-        log.info("배너디티오 리스트 사이즈 : " + bannerDtoList.size());
-
-        long totalCount = bannerDtoList.size();
+        List<BannerDto> bannerDtoList = adminBannerService.list(parameter, bannerInfoList);
 
         String queryString = parameter.getQueryString();
         String pagerHtml = getPaperHtml(totalCount, parameter.getPageSize(), parameter.getPageIndex(), queryString);
 
-        System.out.println("배너 파트 콜!!");
+        /*System.out.println("배너 파트 콜!!");
         System.out.println("코스 쿼리스트링" + queryString);
         System.out.println("페이저HTML : " + pagerHtml);
         System.out.println("토탈 카운트" + totalCount);
         System.out.println("페이지 사이즈" + parameter.getPageSize());
-        System.out.println("페이지 인덱스" + parameter.getPageIndex());
+        System.out.println("페이지 인덱스" + parameter.getPageIndex());*/
 
         model.addAttribute("list", bannerDtoList);
         model.addAttribute("totalCount", totalCount);

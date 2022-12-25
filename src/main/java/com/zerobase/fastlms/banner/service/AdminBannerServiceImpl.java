@@ -60,11 +60,10 @@ public class AdminBannerServiceImpl implements AdminBannerService {
 
 
     @Override
-    public List<BannerDto> list(BannerParam parameter) {
+    public List<BannerDto> list(BannerParam parameter, List<BannerInfo> bannerInfoList) {
 
         List<BannerInfo> bannerEntityList = bannerMapper.selectList(parameter);
 
-        List<BannerInfo> bannerInfoList = bannerRepository.findAll();
         long totalCount = bannerInfoList.size();
 
         System.out.println("배너 서비스 내 토탈카운트" + totalCount);
