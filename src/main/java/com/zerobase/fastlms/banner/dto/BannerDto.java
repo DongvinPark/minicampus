@@ -29,6 +29,7 @@ public class BannerDto {
      long totalCount;
      long seq;
 
+     //파일 처리용
      String fileName;
      String urlFileName;
 

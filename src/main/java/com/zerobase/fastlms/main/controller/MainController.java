@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,6 +30,9 @@ public class MainController {
     public String index(Model model) {
 
         List<BannerDto> publishedBanners = adminBannerService.getPublishedBannerDto();
+
+        Collections.sort(publishedBanners, new BannerSort());
+        
         model.addAttribute("banners", publishedBanners);
         /*
         String email = "satcop@naver.com";
@@ -39,15 +44,19 @@ public class MainController {
         
         return "index";
     }
-    
-    
-    
+
     @RequestMapping("/error/denied")
     public String errorDenied() {
         
         return "error/denied";
     }
     
-    
-    
+}//end of class
+
+class BannerSort implements Comparator<BannerDto>{
+
+    @Override
+    public int compare(BannerDto before, BannerDto after) {
+        return before.getPriorityNumber()- after.getPriorityNumber();
+    }
 }

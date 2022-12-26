@@ -230,7 +230,6 @@ public class MemberController {
     //------------------- PRIVATE HELPER METHOD AREA -------------
 
     private String ipAddrFiltering(String ip, HttpServletRequest request){
-
         if (ip == null) {
             ip = request.getHeader("Proxy-Client-IP");
             //log.info(">>>> Proxy-Client-IP : " + ip);
@@ -250,10 +249,8 @@ public class MemberController {
         if (ip == null) {
             ip = request.getRemoteAddr();
         }
-
         return ip;
-    }
-
+    }//func
 
 
 }//End of class

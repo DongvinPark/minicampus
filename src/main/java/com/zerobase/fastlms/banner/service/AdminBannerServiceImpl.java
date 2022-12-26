@@ -45,10 +45,8 @@ public class AdminBannerServiceImpl implements AdminBannerService {
                         .urlFileName(parameter.getUrlFileName())
                         .build()
         );
-
         return true;
     }//func
-
 
 
 
@@ -74,7 +72,6 @@ public class AdminBannerServiceImpl implements AdminBannerService {
         bannerInfo.setUrlFileName(parameter.getUrlFileName());
 
         bannerRepository.save(bannerInfo);
-
         return true;
     }//func
 
@@ -89,28 +86,18 @@ public class AdminBannerServiceImpl implements AdminBannerService {
 
         long totalCount = bannerInfoList.size();
 
-        System.out.println("배너 서비스 내 토탈카운트" + totalCount);
+        //System.out.println("배너 서비스 내 토탈카운트" + totalCount);
 
         List<BannerDto> bannerDtoList = new ArrayList<>();
         for(BannerInfo bannerEntity : bannerEntityList){
             bannerDtoList.add(
-                    BannerDto.builder()
-                            .id(bannerEntity.getId())
-                            .bannerName(bannerEntity.getBannerName())
-                            .linkPathOnClick(bannerEntity.getLinkPathOnClick())
-                            //urlFileName을 타임리프에 넘겨줘야 한다.
-                            .priorityNumber(bannerEntity.getPriorityNumber())
-                            .isPublished(bannerEntity.isPublished())
-                            .urlFileName(bannerEntity.getUrlFileName())
-                            .createdDate(bannerEntity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                            .build()
+                    getBuild(bannerEntity)
             );
         }
-
-        System.out.println("배너디티오 리스트 내 모든 이미지 소스 파일 출력");
+        /*System.out.println("배너디티오 리스트 내 모든 이미지 소스 파일 출력");
         for(BannerDto bannerDto : bannerDtoList){
             System.out.println(bannerDto.getBannerName() + "의 유알엘 파일패스 : " + bannerDto.getUrlFileName());
-        }
+        }*/
 
         if (!CollectionUtils.isEmpty(bannerDtoList)) {
             int i=0;
@@ -120,10 +107,8 @@ public class AdminBannerServiceImpl implements AdminBannerService {
                 i++;
             }
         }
-
         return bannerDtoList;
-    }
-
+    }//func
 
 
 
@@ -133,16 +118,7 @@ public class AdminBannerServiceImpl implements AdminBannerService {
         Optional<BannerInfo> optionalBannerInfo = bannerRepository.findById(id);
         if(optionalBannerInfo.isPresent()){
             BannerInfo bannerEntity = optionalBannerInfo.get();
-            return BannerDto.builder()
-                    .id(bannerEntity.getId())
-                    .bannerName(bannerEntity.getBannerName())
-                    .linkPathOnClick(bannerEntity.getLinkPathOnClick())
-                    //urlFileName을 타임리프에 넘겨줘야 한다.
-                    .priorityNumber(bannerEntity.getPriorityNumber())
-                    .isPublished(bannerEntity.isPublished())
-                    .urlFileName(bannerEntity.getUrlFileName())
-                    .createdDate(bannerEntity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                    .build();
+            return getBuild(bannerEntity);
         }
         else return null;
     }//func
@@ -184,16 +160,7 @@ public class AdminBannerServiceImpl implements AdminBannerService {
         for(BannerInfo bannerEntity : bannerRepository.findAll()){
             if(bannerEntity.isPublished()){
                 publishedBannerDtos.add(
-                        BannerDto.builder()
-                                .id(bannerEntity.getId())
-                                .bannerName(bannerEntity.getBannerName())
-                                .linkPathOnClick(bannerEntity.getLinkPathOnClick())
-                                //urlFileName을 타임리프에 넘겨줘야 한다.
-                                .priorityNumber(bannerEntity.getPriorityNumber())
-                                .isPublished(bannerEntity.isPublished())
-                                .urlFileName(bannerEntity.getUrlFileName())
-                                .createdDate(bannerEntity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                                .build()
+                        getBuild(bannerEntity)
                 );
             }// published if part
         }//for
@@ -202,6 +169,22 @@ public class AdminBannerServiceImpl implements AdminBannerService {
     }//func
 
 
+
+
+    //------------- PRIVATE HELPER METHODS ------------
+
+    private static BannerDto getBuild(BannerInfo bannerEntity) {
+        return BannerDto.builder()
+                .id(bannerEntity.getId())
+                .bannerName(bannerEntity.getBannerName())
+                .linkPathOnClick(bannerEntity.getLinkPathOnClick())
+                //urlFileName을 타임리프에 넘겨줘야 한다.
+                .priorityNumber(bannerEntity.getPriorityNumber())
+                .isPublished(bannerEntity.isPublished())
+                .urlFileName(bannerEntity.getUrlFileName())
+                .createdDate(bannerEntity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .build();
+    }
 
 
 }//end of class

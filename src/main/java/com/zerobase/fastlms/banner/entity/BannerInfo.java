@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @Entity
-public class BannerInfo implements BroswerOpenMethodCode {
+public class BannerInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

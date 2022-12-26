@@ -40,11 +40,11 @@ public class AdminBannerController extends BaseController {
 
     @GetMapping("/admin/banner/list.do")
     public String list(Model model, BannerParam parameter) {
-        log.info("어드민 배너 컨트롤러 내 list()메서드 호출!!");
+        //log.info("어드민 배너 컨트롤러 내 list()메서드 호출!!");
 
         List<BannerInfo> bannerInfoList = bannerRepository.findAll();
         long totalCount = bannerInfoList.size();
-        System.out.println("배너 서비스 내 토탈 카운트 : " + totalCount);
+        //System.out.println("배너 서비스 내 토탈 카운트 : " + totalCount);
 
         parameter.init();
         List<BannerDto> bannerDtoList = adminBannerService.list(parameter, bannerInfoList);
@@ -77,7 +77,6 @@ public class AdminBannerController extends BaseController {
             , BannerInput parameter) {
         //오픈 방법 선택 동작은 타임리프 없이 html의 select 태그만으로 수행한다.
 
-
         boolean editMode = request.getRequestURI().contains("/edit.do");
         BannerDto detail = new BannerDto();
 
@@ -94,7 +93,7 @@ public class AdminBannerController extends BaseController {
         model.addAttribute("editMode", editMode);
         model.addAttribute("detail", detail);
 
-        log.info("어드민 배너 컨트롤러 내 add()메서드 호출!!");
+        //log.info("어드민 배너 컨트롤러 내 add()메서드 호출!!");
 
         return "admin/banner/add";
     }//func
