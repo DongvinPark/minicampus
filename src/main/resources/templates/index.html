@@ -8,8 +8,34 @@
     <h1>메인 페이지 </h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
-    <div>
-        <img src="/files/2021/09/05/6e5170576b0c4c29879e5334dfccab2d.png"/>
+    <Link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.home__slider').bxSlider();
+        });
+    </script>
+
+    <div class="home__slider">
+        <div class="bxslider">
+            <div>
+                <a href="#"><img src="/files/2022/12/25/99d432727b51405bb930b27dfe471ff0.jpg"></a>
+            </div>
+        </div>
+
+        <div class="bxslider">
+            <div>
+                <a href="#"><img src="/files/2022/12/25/e0bc3daebb454fdfaa01a0c600ff31e5.jpg"></a>
+            </div>
+        </div>
+
+        <div class="bxslider">
+            <div>
+                <a href="#"><img src="/files/2022/12/25/f63859a644a74da3bcc8e639760f6bce.jpg"></a>
+            </div>
+        </div>
     </div>
 
 </body>
