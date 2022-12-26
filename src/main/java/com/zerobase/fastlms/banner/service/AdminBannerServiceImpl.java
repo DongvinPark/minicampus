@@ -178,17 +178,30 @@ public class AdminBannerServiceImpl implements AdminBannerService {
 
 
     @Override
-    public List<BannerDto> frontList(BannerParam parameter) {
-        return null;
+    public List<BannerDto> getPublishedBannerDto() {
+        List<BannerDto> publishedBannerDtos = new ArrayList<>();
+
+        for(BannerInfo bannerEntity : bannerRepository.findAll()){
+            if(bannerEntity.isPublished()){
+                publishedBannerDtos.add(
+                        BannerDto.builder()
+                                .id(bannerEntity.getId())
+                                .bannerName(bannerEntity.getBannerName())
+                                .linkPathOnClick(bannerEntity.getLinkPathOnClick())
+                                //urlFileName을 타임리프에 넘겨줘야 한다.
+                                .priorityNumber(bannerEntity.getPriorityNumber())
+                                .isPublished(bannerEntity.isPublished())
+                                .urlFileName(bannerEntity.getUrlFileName())
+                                .createdDate(bannerEntity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                                .build()
+                );
+            }// published if part
+        }//for
+
+        return publishedBannerDtos;
     }//func
 
 
 
-
-
-    @Override
-    public BannerDto bannerDetailClickedByUser(long id) {
-        return null;
-    }//func
 
 }//end of class

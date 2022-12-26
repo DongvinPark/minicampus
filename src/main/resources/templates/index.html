@@ -19,12 +19,13 @@
     </script>
 
     <div class="home__slider">
-        <div class="bxslider">
+        <div th:each="x : ${banners}" class="bxslider">
             <div>
-                <a href="#"><img src="/files/2022/12/25/99d432727b51405bb930b27dfe471ff0.jpg"></a>
+                <a href="#"><img th:src="${x.urlFileName}"></a>
             </div>
         </div>
 
+        <!--
         <div class="bxslider">
             <div>
                 <a href="#"><img src="/files/2022/12/25/e0bc3daebb454fdfaa01a0c600ff31e5.jpg"></a>
@@ -36,6 +37,7 @@
                 <a href="#"><img src="/files/2022/12/25/f63859a644a74da3bcc8e639760f6bce.jpg"></a>
             </div>
         </div>
+        -->
     </div>
 
 </body>
