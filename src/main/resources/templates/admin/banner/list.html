@@ -130,7 +130,7 @@
         <tbody id="dataLIst">
         <tr th:each="x : ${list}"><!--컨트롤러 단에서 서비스를 호출해서 배너디티오 리스트를 만들고, 그 리스트를 애드어티리뷰트해줘야 한다.-->
             <td>
-                <input type="checkbox" th:value="${x.id}" /><!--여기는 잠시 보류-->
+                <input type="checkbox" th:value="${x.id}" />
             </td>
             <td th:text="${x.seq}">1</td>
             <td>

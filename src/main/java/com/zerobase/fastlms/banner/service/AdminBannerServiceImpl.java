@@ -11,6 +11,7 @@ import com.zerobase.fastlms.course.dto.CourseDto;
 import com.zerobase.fastlms.course.model.CourseInput;
 import com.zerobase.fastlms.course.model.CourseParam;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -18,9 +19,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class AdminBannerServiceImpl implements AdminBannerService {
 
     private final BannerRepository bannerRepository;
@@ -52,7 +55,27 @@ public class AdminBannerServiceImpl implements AdminBannerService {
 
     @Override
     public boolean set(BannerInput parameter) {
-        return false;
+
+        Optional<BannerInfo> optionalBannerInfo = bannerRepository.findById(parameter.getId());
+        if(!optionalBannerInfo.isPresent()){
+            //수정할 데이터를 찾을 수 없음.
+            return false;
+        }
+
+        BannerInfo bannerInfo = optionalBannerInfo.get();
+        bannerInfo.setBannerName(parameter.getBannerName());
+        bannerInfo.setLinkPathOnClick(parameter.getLinkPathOnClick());
+        bannerInfo.setBrowserOpenMethod(parameter.getBrowserOpenMethod());
+        bannerInfo.setPriorityNumber(parameter.getPriorityNumber());
+        bannerInfo.setPublished(parameter.isPublished());
+        bannerInfo.setFileName(parameter.getFileName());
+        bannerInfo.setEditDate(LocalDateTime.now());
+        //생성된 날짜는 굳이 수정할 필요 없음.
+        bannerInfo.setUrlFileName(parameter.getUrlFileName());
+
+        bannerRepository.save(bannerInfo);
+
+        return true;
     }//func
 
 
@@ -84,10 +107,10 @@ public class AdminBannerServiceImpl implements AdminBannerService {
             );
         }
 
-        /*System.out.println("배너디티오 리스트 내 모든 이미지 소스 파일 출력");
+        System.out.println("배너디티오 리스트 내 모든 이미지 소스 파일 출력");
         for(BannerDto bannerDto : bannerDtoList){
-            System.out.println("유알엘 파일패스 : " + bannerDto.getUrlFileName());
-        }*/
+            System.out.println(bannerDto.getBannerName() + "의 유알엘 파일패스 : " + bannerDto.getUrlFileName());
+        }
 
         if (!CollectionUtils.isEmpty(bannerDtoList)) {
             int i=0;
@@ -106,8 +129,22 @@ public class AdminBannerServiceImpl implements AdminBannerService {
 
 
     @Override
-    public BannerDto getById(int id) {
-        return null;
+    public BannerDto getById(long id) {
+        Optional<BannerInfo> optionalBannerInfo = bannerRepository.findById(id);
+        if(optionalBannerInfo.isPresent()){
+            BannerInfo bannerEntity = optionalBannerInfo.get();
+            return BannerDto.builder()
+                    .id(bannerEntity.getId())
+                    .bannerName(bannerEntity.getBannerName())
+                    .linkPathOnClick(bannerEntity.getLinkPathOnClick())
+                    //urlFileName을 타임리프에 넘겨줘야 한다.
+                    .priorityNumber(bannerEntity.getPriorityNumber())
+                    .isPublished(bannerEntity.isPublished())
+                    .urlFileName(bannerEntity.getUrlFileName())
+                    .createdDate(bannerEntity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    .build();
+        }
+        else return null;
     }//func
 
 
@@ -116,9 +153,26 @@ public class AdminBannerServiceImpl implements AdminBannerService {
 
     @Override
     public boolean del(String idList) {
-        return false;
-    }//func
 
+        if (idList != null && idList.length() > 0) {
+            String[] ids = idList.split(",");
+            for (String x : ids) {
+                long id = 0;
+                try {
+                    id = Long.parseLong(x);
+                } catch (Exception e) {
+                }
+
+                if (id > 0) {
+                    log.info("배너 서비스 내 del()메서드 진입!!");
+                    bannerRepository.deleteById(id);
+                    log.info("배너 리포지토리에서 삭제 완료");
+                }
+            }
+        }
+
+        return true;
+    }//func
 
 
 

@@ -44,7 +44,8 @@
 </head>
 <body>
 <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
-<h1>배너 관리 - 배너 등록</h1>
+<h1 th:if="${!editMode}">배너 관리 - 배너 등록</h1>
+<h1 th:if="${editMode}">배너 관리 - 배너 수정</h1>
 
 <div class="detail">
 
@@ -80,7 +81,7 @@
             <tr>
                 <th>오픈 방법</th>
                 <td>
-                    <select name="openMethodSelection" >
+                    <select name="openMethodSelection" required>
                         <option value="">오픈 방법 선택</option>
                         <option value="NEW_WINDOW">새 창에서 열기</option>
                         <option value="CURRENT_PAGE">현재 페이지에서 열기</option>
@@ -111,7 +112,8 @@
         </table>
 
         <div class="buttons">
-            <button type="submit"> 배너 등록 하기 </button>
+            <button th:if="${editMode}" type="submit"> 배너 수정 하기 </button>
+            <button th:if="${!editMode}" type="submit"> 배너 등록 하기 </button>
             <a href="/admin/banner/list.do"> 목록 이동 </a>
         </div>
 
